@@ -2,16 +2,18 @@ body {
   font-family: Arial, sans-serif;
   text-align: center;
   padding: 20px;
+  margin: 0;
   background: #f8f9fa;
 }
 
 h1 {
   margin-bottom: 20px;
+  font-size: 1.5em;
 }
 
 #status {
   margin: 15px 0;
-  font-size: 18px;
+  font-size: 1.2em;
   font-weight: bold;
 }
 
@@ -21,4 +23,12 @@ h1 {
 
 .error {
   color: red;
+}
+
+/* Kontener na kamerę – dopasowanie do szerokości ekranu */
+#reader {
+  width: 100%;
+  max-width: 500px; /* na dużych ekranach nie przekroczy 500px */
+  margin: 0 auto;
+  aspect-ratio: 1 / 1; /* kwadrat – wygląda dobrze na kamerze */
 }
