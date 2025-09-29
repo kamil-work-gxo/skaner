@@ -1,4 +1,7 @@
 let currentWozek = null;
+let lastScan = "";
+let lastScanTime = 0;
+const cooldown = 2000; // 2 sekundy blokady po skanie
 
 // Ładowanie przypisań z pliku JSON
 async function loadData() {
@@ -9,8 +12,6 @@ async function loadData() {
 // Inicjalizacja czytnika
 function startScanner() {
   const html5QrCode = new Html5Qrcode("reader");
-
-  // Dynamiczne dopasowanie rozmiaru pola QR do ekranu
   const qrBoxSize = Math.min(window.innerWidth * 0.8, 300);
 
   html5QrCode.start(
@@ -20,6 +21,17 @@ function startScanner() {
       qrbox: qrBoxSize
     },
     async (decodedText) => {
+      const now = Date.now();
+
+      // Sprawdź cooldown
+      if (now - lastScanTime < cooldown) return;
+
+      // Sprawdź czy nie skanujemy w kółko tego samego
+      if (decodedText === lastScan) return;
+
+      lastScan = decodedText;
+      lastScanTime = now;
+
       if (!currentWozek) {
         // Pierwszy skan = wózek
         currentWozek = decodedText;
@@ -47,6 +59,7 @@ function startScanner() {
           document.getElementById("status").textContent =
             "Najpierw zeskanuj kod QR wózka.";
           document.getElementById("status").className = "";
+          lastScan = ""; // reset ostatniego skanu
         }, 5000);
       }
     },
