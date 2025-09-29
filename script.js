@@ -9,6 +9,16 @@ async function loadData() {
   return await response.json();
 }
 
+// Funkcja resetująca stan
+function resetScanner() {
+  currentWozek = null;
+  lastScan = "";
+  lastScanTime = 0;
+  document.getElementById("status").textContent =
+    "Najpierw zeskanuj kod QR wózka.";
+  document.getElementById("status").className = "";
+}
+
 // Inicjalizacja czytnika
 function startScanner() {
   const html5QrCode = new Html5Qrcode("reader");
@@ -53,14 +63,8 @@ function startScanner() {
           document.getElementById("status").className = "error";
         }
 
-        // Reset po 5 sekundach
-        setTimeout(() => {
-          currentWozek = null;
-          document.getElementById("status").textContent =
-            "Najpierw zeskanuj kod QR wózka.";
-          document.getElementById("status").className = "";
-          lastScan = ""; // reset ostatniego skanu
-        }, 5000);
+        // Automatyczny reset po 5 sekundach
+        setTimeout(resetScanner, 5000);
       }
     },
     (errorMessage) => {
@@ -72,6 +76,9 @@ function startScanner() {
       "❌ Nie udało się uruchomić kamery. Sprawdź uprawnienia.";
     document.getElementById("status").className = "error";
   });
+
+  // Obsługa ręcznego resetu
+  document.getElementById("resetBtn").addEventListener("click", resetScanner);
 }
 
 // Start skanera
