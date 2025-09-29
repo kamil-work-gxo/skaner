@@ -10,11 +10,14 @@ async function loadData() {
 function startScanner() {
   const html5QrCode = new Html5Qrcode("reader");
 
+  // Dynamiczne dopasowanie rozmiaru pola QR do ekranu
+  const qrBoxSize = Math.min(window.innerWidth * 0.8, 300);
+
   html5QrCode.start(
     { facingMode: "environment" },
     {
       fps: 10,
-      qrbox: 250
+      qrbox: qrBoxSize
     },
     async (decodedText) => {
       if (!currentWozek) {
@@ -22,6 +25,7 @@ function startScanner() {
         currentWozek = decodedText;
         document.getElementById("status").textContent =
           `Zeskanowano wózek: ${currentWozek}. Teraz zeskanuj skaner.`;
+        document.getElementById("status").className = "";
       } else {
         // Drugi skan = skaner
         const skaner = decodedText;
@@ -49,8 +53,13 @@ function startScanner() {
     (errorMessage) => {
       // Ignorujemy błędy odczytu
     }
-  );
+  ).catch((err) => {
+    console.error("Błąd uruchamiania kamery: ", err);
+    document.getElementById("status").textContent =
+      "❌ Nie udało się uruchomić kamery. Sprawdź uprawnienia.";
+    document.getElementById("status").className = "error";
+  });
 }
 
-// Start
+// Start skanera
 startScanner();
