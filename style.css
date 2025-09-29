@@ -32,3 +32,20 @@ h1 {
   margin: 0 auto;
   aspect-ratio: 1 / 1; /* kwadrat – wygląda dobrze na kamerze */
 }
+
+#resetBtn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  font-size: 1em;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+#resetBtn:hover {
+  background-color: #0056b3;
+}
+
