@@ -2,6 +2,7 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ważne dla telefonu -->
   <title>Przypisanie skanera do wózka</title>
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
   <link rel="stylesheet" href="style.css">
@@ -10,7 +11,9 @@
   <h1>Przypisanie skanera do wózka</h1>
 
   <div id="status">Najpierw zeskanuj kod QR wózka.</div>
-  <div id="reader" style="width: 300px;"></div>
+  
+  <!-- kontener z responsywną szerokością -->
+  <div id="reader"></div>
 
   <script src="script.js"></script>
 </body>
